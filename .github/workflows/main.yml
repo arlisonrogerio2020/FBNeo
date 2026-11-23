@@ -1,13 +1,15 @@
-yaml
 name: Compilar FBNeo AArch64
 
-on: [workflow_dispatch]
+on:
+  workflow_dispatch:
+  push:
+    branches: [ master, main ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Baixar código
+      - name: Baixar codigo
         uses: actions/checkout@v4
 
       - name: Instalar compilador ARM64
