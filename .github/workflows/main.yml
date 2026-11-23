@@ -1,0 +1,28 @@
+yaml
+name: Compilar FBNeo AArch64
+
+on: [workflow_dispatch]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixar código
+        uses: actions/checkout@v4
+
+      - name: Instalar compilador ARM64
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gcc-aarch64-linux-gnu g++-aarch64-linux-gnu
+
+      - name: Compilar Core
+        working-directory: src/burner/libretro
+        run: |
+          CC=aarch64-linux-gnu-gcc CXX=aarch64-linux-gnu-g++ make platform=unix-armv8 -j$(nproc)
+          aarch64-linux-gnu-strip fbneo_libretro.so
+
+      - name: Disponibilizar Download
+        uses: actions/upload-artifact@v4
+        with:
+          name: fbneo_libretro_aarch64
+          path: src/burner/libretro/fbneo_libretro.so
