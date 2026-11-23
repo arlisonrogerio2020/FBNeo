@@ -20,7 +20,7 @@ jobs:
       - name: Compilar Core
         working-directory: src/burner/libretro
         run: |
-          CC=aarch64-linux-gnu-gcc CXX=aarch64-linux-gnu-g++ make platform=unix-armv8 -j$(nproc)
+          make platform=armv8 CC=aarch64-linux-gnu-gcc CXX=aarch64-linux-gnu-g++ -j$(nproc)
           aarch64-linux-gnu-strip fbneo_libretro.so
 
       - name: Disponibilizar Download
